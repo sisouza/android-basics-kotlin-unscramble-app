@@ -23,11 +23,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
-
+import androidx.fragment.app.viewModels
 /**
  * Fragment where the game is played, contains the game logic.
  */
 class GameFragment : Fragment() {
+
+    //creates an object instance of GameViewModel to associate ViewModel to fragment
+    private val viewModel: GameViewModel by viewModels()
 
     private var score = 0
     private var currentWordCount = 0
