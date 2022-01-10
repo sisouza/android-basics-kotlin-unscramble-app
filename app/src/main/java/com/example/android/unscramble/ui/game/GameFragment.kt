@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
 import androidx.fragment.app.viewModels
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Fragment where the game is played, contains the game logic.
@@ -128,6 +129,27 @@ class GameFragment : Fragment() {
         //uses the read-only GameViewModel property currentScrambleWord
         binding.textViewUnscrambledWord.text = viewModel.currentScrambleWord
     }
+
+    /*
+    * Creates and shows an AlertDialog with the final score.
+    */
+    private fun showFinalScoreDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.congratulations))
+            .setMessage(getString(R.string.you_scored, viewModel.score))
+            //Make your alert dialog not cancelable when the back key is pressed
+            .setCancelable(false)
+
+            .setPositiveButton(getString(R.string.play_again)) { _, _ ->
+                restartGame()
+            }
+
+            .setNegativeButton(getString(R.string.exit)) { _, _ ->
+                exitGame()
+            }
+            .show()
+    }
+
 
     override fun onDetach() {
         super.onDetach()

@@ -47,7 +47,7 @@ class GameViewModel : ViewModel() {
     }
 
     //data variables
-    private var score = 0
+    private var _score = 0
     private var currentWordCount = 0
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
@@ -56,6 +56,9 @@ class GameViewModel : ViewModel() {
     //sets a read-only property of _currentScrambleWord to be used for UI - immutability principle
     val currentScrambleWord: String
         get() = _currentScrambledWord
+
+    val score: Int
+        get() = _score
 
     //before the ViewModel is destroyed, the onCleared() callback is called.
     override fun onCleared() {
