@@ -68,12 +68,28 @@ class GameFragment : Fragment() {
         )
     }
 
+
     /*
     * Checks the user's word, and updates the score accordingly.
     * Displays the next scrambled word.
     */
     private fun onSubmitWord() {
+        //Store the player's word
+        val playerWord = binding.textInputEditText.text.toString()
 
+        //validates player word
+        if (viewModel.isUserWordCorrect(playerWord)) {
+            setErrorTextField(false)
+            if (viewModel.nextWord()) {
+                updateNextWordOnScreen()
+            } else {
+                showFinalScoreDialog()
+            }
+        }else{
+
+            //if users word is incorrect
+            setErrorTextField(true)
+        }
     }
 
     /*

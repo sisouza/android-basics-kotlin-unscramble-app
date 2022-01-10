@@ -6,9 +6,23 @@ import androidx.lifecycle.ViewModel
 //extending ViewModel Class
 class GameViewModel : ViewModel() {
 
-/*
-* Updates currentWord and currentScrambledWord with the next word.
-*/
+    /*
+    * validate the player's word and increase the score if the guess is correct.
+    * */
+    fun isUserWordCorrect(playerWord: String): Boolean {
+        if (playerWord.equals(currentWord, true)) {
+            increaseScore()
+            return true
+        }
+        return false
+    }
+
+    private fun increaseScore() {
+        _score += SCORE_INCREASE
+    }
+    /*
+    * Updates currentWord and currentScrambledWord with the next word.
+    */
 
     private fun getNextWord() {
         //Get a random word from the allWordsList and assign it to currentWord
