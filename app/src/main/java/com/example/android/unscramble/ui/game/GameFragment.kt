@@ -85,7 +85,7 @@ class GameFragment : Fragment() {
             } else {
                 showFinalScoreDialog()
             }
-        }else{
+        } else {
 
             //if users word is incorrect
             setErrorTextField(true)
@@ -97,7 +97,12 @@ class GameFragment : Fragment() {
      * Increases the word count.
      */
     private fun onSkipWord() {
-
+        if (viewModel.nextWord()) {
+            setErrorTextField(false)
+            updateNextWordOnScreen()
+        } else {
+            showFinalScoreDialog()
+        }
     }
 
     /*
