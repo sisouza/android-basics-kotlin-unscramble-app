@@ -51,6 +51,12 @@ class GameFragment : Fragment() {
         binding = GameFragmentBinding.inflate(inflater, container, false)
         //log the creation of the fragment
         Log.d("GameFragment", "GameFragment created/re-created!")
+        //print app data
+        Log.d(
+            "GameFragment",
+            "Word: ${viewModel.currentScrambledWord} " + "Score: ${viewModel.score} WordCount: ${viewModel.currentWordCount}"
+        )
+
         return binding.root
     }
 
@@ -115,10 +121,31 @@ class GameFragment : Fragment() {
     }
 
     /*
+  * Creates and shows an AlertDialog with the final score.
+  */
+    private fun showFinalScoreDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.congratulations))
+            .setMessage(getString(R.string.you_scored, viewModel.score))
+            //Make your alert dialog not cancelable when the back key is pressed
+            .setCancelable(false)
+
+            .setPositiveButton(getString(R.string.play_again)) { _, _ ->
+                restartGame()
+            }
+
+            .setNegativeButton(getString(R.string.exit)) { _, _ ->
+                exitGame()
+            }
+            .show()
+    }
+
+    /*
      * Re-initializes the data in the ViewModel and updates the views with the new data, to
      * restart the game.
      */
     private fun restartGame() {
+        viewModel.reinitializeData()
         setErrorTextField(false)
         updateNextWordOnScreen()
     }
@@ -128,6 +155,12 @@ class GameFragment : Fragment() {
      */
     private fun exitGame() {
         activity?.finish()
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("GameFragment", "GameFragment destroyed!")
     }
 
     /*
@@ -148,33 +181,7 @@ class GameFragment : Fragment() {
      */
     private fun updateNextWordOnScreen() {
         //uses the read-only GameViewModel property currentScrambleWord
-        binding.textViewUnscrambledWord.text = viewModel.currentScrambleWord
-    }
-
-    /*
-    * Creates and shows an AlertDialog with the final score.
-    */
-    private fun showFinalScoreDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.congratulations))
-            .setMessage(getString(R.string.you_scored, viewModel.score))
-            //Make your alert dialog not cancelable when the back key is pressed
-            .setCancelable(false)
-
-            .setPositiveButton(getString(R.string.play_again)) { _, _ ->
-                restartGame()
-            }
-
-            .setNegativeButton(getString(R.string.exit)) { _, _ ->
-                exitGame()
-            }
-            .show()
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("GameFragment", "GameFragment destroyed!")
+        binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
     }
 
 }
