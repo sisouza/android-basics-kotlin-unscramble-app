@@ -38,7 +38,7 @@ class GameViewModel : ViewModel() {
             getNextWord()
         } else {
             _currentScrambledWord = String(tempWord)
-            ++_currentScrambledWord
+            ++_currentWordCount
             wordsList.add(currentWord)
         }
     }
@@ -62,7 +62,7 @@ class GameViewModel : ViewModel() {
 
     //data variables
     private var _score = 0
-    private var currentWordCount = 0
+    private var _currentWordCount = 0
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
     private lateinit var _currentScrambledWord: String
@@ -73,6 +73,9 @@ class GameViewModel : ViewModel() {
 
     val score: Int
         get() = _score
+
+    val currentWordCount: Int
+        get() = _currentWordCount
 
     //before the ViewModel is destroyed, the onCleared() callback is called.
     override fun onCleared() {
